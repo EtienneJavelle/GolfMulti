@@ -24,7 +24,7 @@ public class Connect : MonoBehaviour {
     }
 
     private void AuthenticateSucessCallback(Client client) {
-        Debug.Log($"{PlayerIOMessage}<color=green>Successfully connected</color>");
+        Debug.Log($"{PlayerIOMessage}<color=green>Successfully authenticated</color>");
         OnConnection();
 
         Debug.Log($"{PlayerIOMessage}Create ServerEndpoint");
