@@ -1,1 +1,1 @@
-public enum MessageType {Debug,}
+public enum MessageType { Debug, Update, Ready, Shoot, Done, NextLevel }

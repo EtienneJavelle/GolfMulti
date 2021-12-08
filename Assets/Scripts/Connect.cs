@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-public class Connect : MonoBehaviour {
+public class Connect : Etienne.Singleton<Connect> {
     private const string PlayerIOMessage = "<color=yellow><b>PlayerIO :</b></color> ";
 
     [SerializeField] private ConnectionUIHandeler uIHandeler;
@@ -13,8 +13,15 @@ public class Connect : MonoBehaviour {
     private static Connection s_connection;
     private List<Message> msgList = new List<Message>();
     string userid;
-    private void Start() {
+
+    private Ball ball;
+    List<Transform> balls = new List<Transform>();
+
+    private void Start()
+    {
         Application.runInBackground = true;
+
+        DontDestroyOnLoad(gameObject);
 
         userid = $"{userName}_{UnityEngine.Random.Range(0, 10001)}";
         Debug.Log($"{PlayerIOMessage}Connecting with: {userid}");
@@ -23,7 +30,8 @@ public class Connect : MonoBehaviour {
         PlayerIO.Authenticate(gameId, "public", authenticationArguments, null, AuthenticateSucessCallback, ErrorCallback);
     }
 
-    private void AuthenticateSucessCallback(Client client) {
+    private void AuthenticateSucessCallback(Client client)
+    {
         Debug.Log($"{PlayerIOMessage}<color=green>Successfully authenticated</color>");
         OnConnection();
 
@@ -38,24 +46,28 @@ public class Connect : MonoBehaviour {
 
     }
 
-    private void CreateJoinRoomCallback(Connection connection) {
+    private void CreateJoinRoomCallback(Connection connection)
+    {
         s_connection = connection;
         s_connection.OnMessage += handlemessage;
         Debug.Log($"{PlayerIOMessage}<color=green>Joined Room.</color>");
         uIHandeler.gameObject.SetActive(false);
     }
 
-    private void handlemessage(object sender, Message m) {
+    private void handlemessage(object sender, Message m)
+    {
         Debug.Log($"{PlayerIOMessage} Message Recieved : {m}");
         msgList.Add(m);
     }
 
-    private void ErrorCallback(PlayerIOError error) {
+    private void ErrorCallback(PlayerIOError error)
+    {
         Debug.Log($"{PlayerIOMessage}<color=red>Error connecting:</color> {Environment.NewLine}{error}");
         uIHandeler.text.text = "Can't connect !";
     }
 
-    public static void Send(string type, params object[] parameters) {
+    public static void Send(string type, params object[] parameters)
+    {
         StringBuilder message = new StringBuilder();
         message.Append($"{PlayerIOMessage} Message Sent :");
         foreach(object parameter in parameters) {
@@ -65,16 +77,25 @@ public class Connect : MonoBehaviour {
         s_connection.Send(type, parameters);
     }
 
-    private void Update() {
-        foreach(Message m in msgList) {
-            switch(m.Type) {
-                case nameof(MessageType.Debug):
-                    Debug.Log(userid);
+    private void Update()
+    {
+        foreach(Message message in msgList)
+        {
+            switch(message.Type)
+            {
+                case nameof(MessageType.Ready):
+                    // TODO : Player peut switcher de camera et tirer
+                    // TODO : Quand il tire envoyer MessageType.Shoot au serveur
+
                     break;
-                default:
+
+                case nameof(MessageType.Update):
+                    // TODO : Update la balle balls[i] avec i = message.GetInt(0), si elle n'existe pas if faut la créer
+
                     break;
             }
         }
+
         msgList.Clear();
     }
 }

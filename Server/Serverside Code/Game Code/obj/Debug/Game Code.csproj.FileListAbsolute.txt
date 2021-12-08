@@ -7,3 +7,12 @@ C:\Users\sylst\Downloads\OnlineChess-main\Server\Serverside Code\Game Code\obj\D
 C:\Users\sylst\Downloads\OnlineChess-main\Server\Serverside Code\Game Code\obj\Debug\Game Code.csproj.CopyComplete
 C:\Users\sylst\Downloads\OnlineChess-main\Server\Serverside Code\Game Code\obj\Debug\MushroomsUnity3DExample.dll
 C:\Users\sylst\Downloads\OnlineChess-main\Server\Serverside Code\Game Code\obj\Debug\MushroomsUnity3DExample.pdb
+C:\Users\gbernard\Documents\GolfMulti\Server\Serverside Code\Game Code\bin\Debug\MushroomsUnity3DExample.dll
+C:\Users\gbernard\Documents\GolfMulti\Server\Serverside Code\Game Code\bin\Debug\MushroomsUnity3DExample.pdb
+C:\Users\gbernard\Documents\GolfMulti\Server\Serverside Code\Game Code\bin\Debug\Player.IO GameLibrary.dll
+C:\Users\gbernard\Documents\GolfMulti\Server\Serverside Code\Game Code\bin\Debug\Player.IO GameLibrary.xml
+C:\Users\gbernard\Documents\GolfMulti\Server\Serverside Code\Game Code\obj\Debug\Game Code.csprojAssemblyReference.cache
+C:\Users\gbernard\Documents\GolfMulti\Server\Serverside Code\Game Code\obj\Debug\Game Code.csproj.CoreCompileInputs.cache
+C:\Users\gbernard\Documents\GolfMulti\Server\Serverside Code\Game Code\obj\Debug\Game Code.csproj.CopyComplete
+C:\Users\gbernard\Documents\GolfMulti\Server\Serverside Code\Game Code\obj\Debug\MushroomsUnity3DExample.dll
+C:\Users\gbernard\Documents\GolfMulti\Server\Serverside Code\Game Code\obj\Debug\MushroomsUnity3DExample.pdb
