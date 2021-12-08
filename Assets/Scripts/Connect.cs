@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Connect : Etienne.Singleton<Connect> {
     private const string PlayerIOMessage = "<color=yellow><b>PlayerIO :</b></color> ";
-
+    public static bool IsConnected=>isConnected;
     [SerializeField] private ConnectionUIHandeler uIHandeler;
     [SerializeField] private string gameId, userName;
 
@@ -16,6 +16,7 @@ public class Connect : Etienne.Singleton<Connect> {
 
     private Ball ball;
     Dictionary<int, Transform> balls = new Dictionary<int, Transform>();
+    private static bool isConnected= false;
 
     private void Start()
     {
@@ -43,7 +44,7 @@ public class Connect : Etienne.Singleton<Connect> {
     }
 
     private void OnConnection() {
-
+        isConnected = true;
     }
 
     private void CreateJoinRoomCallback(Connection connection)
