@@ -10,6 +10,8 @@ public class Connect : Etienne.Singleton<Connect> {
     public static bool IsConnected=>isConnected;
     [SerializeField] private ConnectionUIHandeler uIHandeler;
     [SerializeField] private string gameId, userName;
+    [SerializeField] private GameObject opponentPrefab;
+    [SerializeField] private Color[] playerColors;
 
     private static Connection s_connection;
     private List<Message> msgList = new List<Message>();
@@ -116,8 +118,10 @@ public class Connect : Etienne.Singleton<Connect> {
 
     private Transform CreateBall(int color)
     {
-        // TODO: Return un nouveau gameobject.transform de la bonne couleur
+        var go = GameObject.Instantiate(opponentPrefab);
+        go.GetComponent<MeshRenderer>().material.color = playerColors[color];
+        go.name = $"Player {color}";
 
-        return new GameObject(color.ToString()).transform;
+        return go.transform;
     }
 }
