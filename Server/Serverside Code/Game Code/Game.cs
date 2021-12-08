@@ -37,6 +37,8 @@ namespace Server {
                     }
                 }
 
+                player.Send(nameof(MessageType.NextLevel));
+
                 if (PlayerCount == 1)
                     player.Send(nameof(MessageType.Ready));
             }

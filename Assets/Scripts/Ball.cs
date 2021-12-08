@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Ball : MonoBehaviour {
     private Rigidbody rgbd;
@@ -60,8 +61,15 @@ public class Ball : MonoBehaviour {
 
         if(rgbd.velocity.magnitude <= minVelocity ) {
             rgbd.velocity = Vector3.zero;
-        } else {
-            Connect.Send(nameof(MessageType.Update),transform.position.x,transform.position.y,transform.position.z);
+        }
+    }
+
+    private IEnumerator SendUpdate()
+    {
+        while (enabled)
+        {
+            Connect.Send(nameof(MessageType.Update), transform.position.x, transform.position.y, transform.position.z);
+            yield return new WaitForSeconds(1f);
         }
     }
 
@@ -78,5 +86,15 @@ public class Ball : MonoBehaviour {
     private void MoveOnForward(Transform other) {
         other.position = transform.position;
         other.rotation = Quaternion.Euler(0f, Camera.main.transform.rotation.eulerAngles.y, 0f);
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine(SendUpdate());
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
     }
 }

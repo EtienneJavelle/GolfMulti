@@ -6,7 +6,7 @@ public class Player : Etienne.Singleton<Player> {
     private Ball ball;
 
     private void Start() {
-        ball = GetComponent<Ball>();
+        ball = GetComponentInChildren<Ball>();
     }
 
     private void Update() {
@@ -23,6 +23,5 @@ public class Player : Etienne.Singleton<Player> {
         this.isYourTurn = isYourTurn;
         ball.enabled = isYourTurn;
         levelCam.Priority = isYourTurn ? 9 : 11;
-
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Connect : Etienne.Singleton<Connect> {
     private const string PlayerIOMessage = "<color=yellow><b>PlayerIO :</b></color> ";
@@ -87,7 +88,14 @@ public class Connect : Etienne.Singleton<Connect> {
         {
             switch(message.Type)
             {
+                case nameof(MessageType.NextLevel):
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                    msgList.Remove(message);
+
+                    break;
                 case nameof(MessageType.Ready):
+                    if (Player.Instance == null)
+                        return;
                     Player.Instance.SetTurn(true);
                     break;
 
@@ -110,6 +118,6 @@ public class Connect : Etienne.Singleton<Connect> {
     {
         // TODO: Return un nouveau gameobject.transform de la bonne couleur
 
-        return null;
+        return new GameObject(color.ToString()).transform;
     }
 }
