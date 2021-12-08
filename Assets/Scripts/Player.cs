@@ -62,10 +62,10 @@ public class Player : Etienne.Singleton<Player> {
         ball.GetComponent<Outline>().OutlineColor = color;
     }
 
-    // TODO : UI Feedback camera switch, nb joueur, nom joueur, barre chargement puissance, compteur, bouton retry tp début
+    // TODO : UI Feedback camera switch, nb joueur, nom joueur, barre chargement puissance, compteur, bouton retry tp dï¿½but
     // TODO : gagner, sauter tour des done, 5 coup de plus que 1er abandon
 
     // TODO : corriger bug tir rebond A check
-    // TODO : 3 ème map 
+    // TODO : 3 ï¿½me map 
     // TODO : Bonne couleur pour premier joueur Acheck
 }
