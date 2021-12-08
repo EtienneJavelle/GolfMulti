@@ -1,7 +1,7 @@
 ﻿using PlayerIO.GameLibrary;
 using System;
 
-namespace Chess.Server {
+namespace Server {
     public class Player : BasePlayer {
     }
 

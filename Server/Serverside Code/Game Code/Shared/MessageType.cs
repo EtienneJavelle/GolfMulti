@@ -1,3 +1,3 @@
-﻿namespace Chess.Server {
+﻿namespace Server {
     public enum MessageType { Debug }
 }
