@@ -6,10 +6,11 @@ public class Player : Etienne.Singleton<Player> {
     public bool isYourTurn = false;
     private Ball ball;
     internal bool hasPlayed = false;
+    [SerializeField] private bool debug;
 
     private void Start() {
         ball = GetComponentInChildren<Ball>();
-        SetTurn(false);
+       if(!debug) SetTurn(false);
     }
 
     private void Update() {
@@ -43,10 +44,14 @@ public class Player : Etienne.Singleton<Player> {
         }
     }
 
+    public void SetColor(Color color) {
+        ball.GetComponent<MeshRenderer>().material.color = color;
+    }
+
     // TODO : UI Feedback camera switch, nb joueur, nom joueur, barre chargement puissance, compteur, bouton retry tp début
     // TODO : gagner, sauter tour des done, 5 coup de plus que 1er abandon
 
-    // TODO : corriger bug tir rebond
-    // TODO : 3 ème map
-    // TODO : Bonne couleur pour premier joueur
+    // TODO : corriger bug tir rebond A check
+    // TODO : 3 ème map 
+    // TODO : Bonne couleur pour premier joueur Acheck
 }

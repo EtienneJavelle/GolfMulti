@@ -90,6 +90,10 @@ public class Connect : Etienne.Singleton<Connect> {
         {
             switch(message.Type)
             {
+                case nameof(MessageType.PlayerIndex):
+                    var playerIndex = message.GetInt(0);
+                    SetPlayerColor(playerIndex);
+                    break;
                 case nameof(MessageType.NextLevel):
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                     msgList.Remove(message);
@@ -114,6 +118,10 @@ public class Connect : Etienne.Singleton<Connect> {
         }
 
         msgList.Clear();
+    }
+
+    private void SetPlayerColor(int playerIndex) {
+        Player.Instance.SetColor(playerColors[playerIndex]);
     }
 
     private Transform CreateBall(int color)
