@@ -12,7 +12,7 @@ namespace Server {
     [RoomType("ChessRoom")]
     public class GameCode : Game<Player>
     {
-        private int RoomSize = 2;
+        private int RoomSize = 4;
         private int GameSize = 0;
         private int Turn = 0;
 
@@ -40,7 +40,9 @@ namespace Server {
                 player.Send(nameof(MessageType.NextLevel));
 
                 if (PlayerCount == 1)
+                {
                     player.Send(nameof(MessageType.Ready));
+                }
             }
         }
 
@@ -66,6 +68,7 @@ namespace Server {
                     break;
 
                 case nameof(MessageType.Update):
+                    Console.WriteLine(player.Index);
                     message.Add(player.Index);
                     SendMessage(player, message);
 

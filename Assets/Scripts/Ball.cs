@@ -31,7 +31,7 @@ public class Ball : MonoBehaviour {
     }
 
     private void Update() {
-        if (!Player.Instance.hasPlayed)
+        if (Player.Instance.isYourTurn && !Player.Instance.hasPlayed)
         {
             if (Input.GetMouseButtonUp(1))
             {
@@ -74,15 +74,6 @@ public class Ball : MonoBehaviour {
         }
     }
 
-    private IEnumerator SendUpdate()
-    {
-        while (enabled)
-        {
-            Connect.Send(nameof(MessageType.Update), transform.position.x, transform.position.y, transform.position.z);
-            yield return new WaitForSeconds(0.0167f);
-        }
-    }
-
     private void ResetLoad(bool loading = false) {
         this.loading = loading;
 
@@ -96,15 +87,5 @@ public class Ball : MonoBehaviour {
     private void MoveOnForward(Transform other) {
         other.position = transform.position;
         other.rotation = Quaternion.Euler(0f, Camera.main.transform.rotation.eulerAngles.y, 0f);
-    }
-
-    private void OnEnable()
-    {
-        StartCoroutine(SendUpdate());
-    }
-
-    private void OnDisable()
-    {
-        StopAllCoroutines();
     }
 }
