@@ -107,7 +107,7 @@ public class Connect : Etienne.Singleton<Connect> {
                     if (!balls.ContainsKey(key))
                         balls[key] = CreateBall(key);
 
-                    balls[key].position = new Vector3(message.GetInt(0), message.GetInt(1), message.GetInt(2));
+                    balls[key].position = new Vector3(message.GetFloat(0), message.GetFloat(1), message.GetFloat(2));
 
                     break;
             }

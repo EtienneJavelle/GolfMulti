@@ -20,7 +20,7 @@ public class Ball : MonoBehaviour {
     [SerializeField] private Transform arrow;
     [SerializeField] private Transform club;
 
-    float minVelocity = .01f;
+    float minVelocity = .1f;
 
     private void Awake() {
         rgbd = GetComponent<Rigidbody>();
@@ -31,16 +31,23 @@ public class Ball : MonoBehaviour {
     }
 
     private void Update() {
-        if(Input.GetMouseButtonUp(1)) {
-            ResetLoad();
-        } else if(Input.GetMouseButtonDown(0)) {
-            ResetLoad(true);
-        } else if(Input.GetMouseButtonUp(0) && loading) {
-            rgbd.AddForce(arrow.transform.forward * force, ForceMode.Impulse);
+        if (!Player.Instance.hasPlayed)
+        {
+            if (Input.GetMouseButtonUp(1))
+            {
+                ResetLoad();
+            }
+            else if (Input.GetMouseButtonDown(0))
+            {
+                ResetLoad(true);
+            }
+            else if (Input.GetMouseButtonUp(0) && loading)
+            {
+                rgbd.AddForce(arrow.transform.forward * force, ForceMode.Impulse);
 
-            ResetLoad();
-            Connect.Send(nameof(MessageType.Shoot));
-            Player.Instance.SetTurn(false);
+                ResetLoad();
+                Player.Instance.hasPlayed = true;
+            }
         }
 
         if(loading) {
@@ -59,8 +66,10 @@ public class Ball : MonoBehaviour {
 
         rgbd.angularVelocity = Vector3.MoveTowards(rgbd.angularVelocity, Vector3.zero, 10f * Time.deltaTime);
 
-        if(rgbd.velocity.magnitude <= minVelocity ) {
+        if(rgbd.velocity.magnitude <= minVelocity && rgbd.velocity != Vector3.zero) {
             rgbd.velocity = Vector3.zero;
+            Connect.Send(nameof(MessageType.Shoot));
+            Player.Instance.SetTurn(false);
         }
     }
 
@@ -69,7 +78,7 @@ public class Ball : MonoBehaviour {
         while (enabled)
         {
             Connect.Send(nameof(MessageType.Update), transform.position.x, transform.position.y, transform.position.z);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.0167f);
         }
     }
 

@@ -66,6 +66,7 @@ namespace Server {
                     break;
 
                 case nameof(MessageType.Update):
+                    message.Add(player.Index);
                     SendMessage(player, message);
 
                     break;
