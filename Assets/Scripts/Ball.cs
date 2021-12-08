@@ -66,7 +66,8 @@ public class Ball : MonoBehaviour {
 
         rgbd.angularVelocity = Vector3.MoveTowards(rgbd.angularVelocity, Vector3.zero, 10f * Time.deltaTime);
 
-        if(rgbd.velocity.magnitude <= minVelocity && rgbd.velocity != Vector3.zero) {
+        if(Player.Instance.hasPlayed && rgbd.velocity.magnitude <= minVelocity && rgbd.velocity != Vector3.zero) {
+            Debug.Log("Fin du tour");
             rgbd.velocity = Vector3.zero;
             Connect.Send(nameof(MessageType.Shoot));
             Player.Instance.SetTurn(false);
