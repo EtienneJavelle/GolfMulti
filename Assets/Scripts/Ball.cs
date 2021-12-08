@@ -1,7 +1,6 @@
 using UnityEngine;
 
-public class Ball : MonoBehaviour
-{
+public class Ball : MonoBehaviour {
     private Rigidbody rgbd;
 
     [SerializeField] private float minForce = 0.2f;
@@ -13,40 +12,42 @@ public class Ball : MonoBehaviour
     [SerializeField] private float maxClubDist = 0.25f;
 
     [SerializeField] private float clubDist = 0f;
+    [SerializeField] private float arrowDist = .2f;
 
     [SerializeField] private bool loading = false;
 
     [SerializeField] private Transform arrow;
     [SerializeField] private Transform club;
 
-    private void Awake()
-    {
+    float minVelocity = .01f;
+
+    private void Awake() {
         rgbd = GetComponent<Rigidbody>();
     }
 
-    private void Start()
-    {
+    private void Start() {
         ResetLoad();
     }
 
-    private void Update()
-    {
-        if (Input.GetMouseButtonUp(1))
+    private void Update() {
+        if(Input.GetMouseButtonUp(1)) {
             ResetLoad();
-        else if (Input.GetMouseButtonDown(0))
+        } else if(Input.GetMouseButtonDown(0)) {
             ResetLoad(true);
-        else if (Input.GetMouseButtonUp(0) && loading)
-        {
+        } else if(Input.GetMouseButtonUp(0) && loading) {
             rgbd.AddForce(arrow.transform.forward * force, ForceMode.Impulse);
 
             ResetLoad();
+            Connect.Send(nameof(MessageType.Shoot));
+            Player.Instance.SetTurn(false);
         }
-        
-        if (loading)
+
+        if(loading) {
             force = Mathf.Lerp(force, maxForce, Time.deltaTime);
+        }
 
         MoveOnForward(arrow);
-        arrow.position += arrow.forward * 0.5f;
+        arrow.position += arrow.forward * arrowDist ;
 
         MoveOnForward(club);
 
@@ -56,10 +57,15 @@ public class Ball : MonoBehaviour
         club.position -= club.forward * clubDist;
 
         rgbd.angularVelocity = Vector3.MoveTowards(rgbd.angularVelocity, Vector3.zero, 10f * Time.deltaTime);
+
+        if(rgbd.velocity.magnitude <= minVelocity ) {
+            rgbd.velocity = Vector3.zero;
+        } else {
+            Connect.Send(nameof(MessageType.Update),transform.position.x,transform.position.y,transform.position.z);
+        }
     }
 
-    private void ResetLoad(bool loading = false)
-    {
+    private void ResetLoad(bool loading = false) {
         this.loading = loading;
 
         arrow.gameObject.SetActive(loading);
@@ -69,8 +75,7 @@ public class Ball : MonoBehaviour
         clubDist = minClubDist;
     }
 
-    private void MoveOnForward(Transform other)
-    {
+    private void MoveOnForward(Transform other) {
         other.position = transform.position;
         other.rotation = Quaternion.Euler(0f, Camera.main.transform.rotation.eulerAngles.y, 0f);
     }

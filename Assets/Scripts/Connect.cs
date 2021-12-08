@@ -84,18 +84,16 @@ public class Connect : Etienne.Singleton<Connect> {
             switch(message.Type)
             {
                 case nameof(MessageType.Ready):
-                    // TODO : Player peut switcher de camera et tirer
-                    // TODO : Quand il tire envoyer MessageType.Shoot au serveur
-
+                    Player.Instance.SetTurn(true);
                     break;
 
                 case nameof(MessageType.Update):
-                    int key = message.GetInt(0);
+                    int key = message.GetInt(3);
 
                     if (!balls.ContainsKey(key))
                         balls[key] = CreateBall(key);
 
-                    balls[key].position = new Vector3(message.GetInt(1), message.GetInt(2), message.GetInt(3));
+                    balls[key].position = new Vector3(message.GetInt(0), message.GetInt(1), message.GetInt(2));
 
                     break;
             }
