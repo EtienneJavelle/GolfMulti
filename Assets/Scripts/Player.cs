@@ -46,6 +46,7 @@ public class Player : Etienne.Singleton<Player> {
 
     public void SetColor(Color color) {
         ball.GetComponent<MeshRenderer>().material.color = color;
+        ball.GetComponent<Outline>().OutlineColor = color;
     }
 
     // TODO : UI Feedback camera switch, nb joueur, nom joueur, barre chargement puissance, compteur, bouton retry tp début
