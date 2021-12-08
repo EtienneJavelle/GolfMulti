@@ -17,7 +17,6 @@ public class Connect : Etienne.Singleton<Connect> {
     private List<Message> msgList = new List<Message>();
     string userid;
 
-    private Ball ball;
     Dictionary<int, Transform> balls = new Dictionary<int, Transform>();
     private static bool isConnected= false;
 
@@ -130,6 +129,7 @@ public class Connect : Etienne.Singleton<Connect> {
         var go = GameObject.Instantiate(opponentPrefab);
         go.GetComponent<MeshRenderer>().material.color = playerColors[color];
         go.name = $"Player {color}";
+        DontDestroyOnLoad(go);
 
         return go.transform;
     }

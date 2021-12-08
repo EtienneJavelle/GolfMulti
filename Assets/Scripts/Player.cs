@@ -14,11 +14,24 @@ public class Player : Etienne.Singleton<Player> {
     }
 
     private void Update() {
-        if(isYourTurn && Input.GetKeyDown(KeyCode.Alpha1)) {
-            if(levelCam.Priority == 11) {
-                levelCam.Priority = 9;
-            } else {
-                levelCam.Priority = 11;
+        if (isYourTurn)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                if (levelCam.Priority == 11)
+                {
+                    levelCam.Priority = 9;
+                }
+                else
+                {
+                    levelCam.Priority = 11;
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                ball.transform.localPosition = Vector3.zero;
+                ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                Connect.Send(nameof(MessageType.Update), ball.transform.position.x, ball.transform.position.y, ball.transform.position.z);
             }
         }
     }
