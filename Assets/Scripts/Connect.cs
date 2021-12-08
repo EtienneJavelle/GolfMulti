@@ -15,7 +15,7 @@ public class Connect : Etienne.Singleton<Connect> {
     string userid;
 
     private Ball ball;
-    List<Transform> balls = new List<Transform>();
+    Dictionary<int, Transform> balls = new Dictionary<int, Transform>();
 
     private void Start()
     {
@@ -90,12 +90,24 @@ public class Connect : Etienne.Singleton<Connect> {
                     break;
 
                 case nameof(MessageType.Update):
-                    // TODO : Update la balle balls[i] avec i = message.GetInt(0), si elle n'existe pas if faut la créer
+                    int key = message.GetInt(0);
+
+                    if (!balls.ContainsKey(key))
+                        balls[key] = CreateBall(key);
+
+                    balls[key].position = new Vector3(message.GetInt(1), message.GetInt(2), message.GetInt(3));
 
                     break;
             }
         }
 
         msgList.Clear();
+    }
+
+    private Transform CreateBall(int color)
+    {
+        // TODO: Return un nouveau gameobject.transform de la bonne couleur
+
+        return null;
     }
 }
