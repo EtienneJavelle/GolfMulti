@@ -48,10 +48,13 @@ public class Ball : MonoBehaviour {
                 ResetLoad();
                 Player.Instance.hasPlayed = true;
             }
-        }
 
-        if(loading) {
-            force = Mathf.Lerp(force, maxForce, Time.deltaTime);
+            UIManager.Instance.SetPower(force / maxForce);
+        }
+        else UIManager.Instance.SetPower(0f);
+
+        if (loading) {
+            force = Mathf.MoveTowards(force, maxForce, Time.deltaTime);
         }
 
         MoveOnForward(arrow);

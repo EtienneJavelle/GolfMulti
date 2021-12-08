@@ -39,6 +39,8 @@ namespace Server {
 
                 player.Send(nameof(MessageType.NextLevel));
 
+                player.Send(nameof(MessageType.PlayerIndex), player.Index);
+
                 if (PlayerCount == 1)
                 {
                     player.Send(nameof(MessageType.Ready));
@@ -57,9 +59,23 @@ namespace Server {
                     {
                         GameSize = PlayerCount;
                         Console.WriteLine("Game locked with a size of " + GameSize);
-                    }   
+                    }
+
 
                     Turn = (Turn + 1) % GameSize;
+
+                    bool jump = true;
+                    do
+                    {
+                        jump = false;
+                        foreach (Player other in Players)
+                            if (other.Index == Turn && other.Done)
+                            {
+                                jump = true;
+                                Turn = (Turn + 1) % GameSize;
+                                break;
+                            }
+                    } while (jump);
 
                     foreach (Player other in Players)
                         if (other.Index == Turn)
@@ -78,10 +94,12 @@ namespace Server {
                     player.Done = true;
 
                     if (AllDone())
+                    {
                         foreach (Player other in Players)
                             other.Done = false;
-                    
-                    Broadcast(nameof(MessageType.NextLevel));
+
+                        Broadcast(nameof(MessageType.NextLevel));
+                    }
 
                     break;
             }

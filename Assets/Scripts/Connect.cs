@@ -90,10 +90,6 @@ public class Connect : Etienne.Singleton<Connect> {
         {
             switch(message.Type)
             {
-                case nameof(MessageType.PlayerIndex):
-                    var playerIndex = message.GetInt(0);
-                    SetPlayerColor(playerIndex);
-                    break;
                 case nameof(MessageType.NextLevel):
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                     msgList.Remove(message);
@@ -104,7 +100,12 @@ public class Connect : Etienne.Singleton<Connect> {
                         return;
                     Player.Instance.SetTurn(true);
                     break;
-
+                case nameof(MessageType.PlayerIndex):
+                    if (Player.Instance == null)
+                        return;
+                    var playerIndex = message.GetInt(0);
+                    SetPlayerColor(playerIndex);
+                    break;
                 case nameof(MessageType.Update):
                     int key = message.GetInt(3);
 

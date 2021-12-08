@@ -5,6 +5,7 @@ using UnityEngine;
 public class Hole : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other) {
-        Debug.Log("Win");
+        UIManager.Instance.Win(true);
+        Connect.Send(nameof(MessageType.Done));
     }
 }
