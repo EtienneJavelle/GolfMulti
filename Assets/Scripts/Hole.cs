@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ramp : MonoBehaviour
+public class Hole : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other) {
-        if(other.TryGetComponent<Rigidbody>(out Rigidbody rb)){
-            rb.velocity *= 2;
-        }
+        Debug.Log("Win");
     }
 }

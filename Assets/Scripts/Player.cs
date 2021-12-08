@@ -3,6 +3,11 @@ using UnityEngine;
 public class Player : Etienne.Singleton<Player> {
     [SerializeField] private Cinemachine.CinemachineVirtualCameraBase levelCam, freelookCam;
     private bool isYourTurn = true;
+    private Ball ball;
+
+    private void Start() {
+        ball = GetComponent<Ball>();
+    }
 
     private void Update() {
         if(isYourTurn && Input.GetKeyDown(KeyCode.Alpha1)) {
@@ -16,8 +21,8 @@ public class Player : Etienne.Singleton<Player> {
 
     public void SetTurn(bool isYourTurn) {
         this.isYourTurn = isYourTurn;
-        if(!isYourTurn) {
-            levelCam.Priority = 11;
-        }
+        ball.enabled = isYourTurn;
+        levelCam.Priority = isYourTurn ? 9 : 11;
+
     }
 }

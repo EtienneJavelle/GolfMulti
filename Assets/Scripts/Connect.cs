@@ -69,6 +69,9 @@ public class Connect : Etienne.Singleton<Connect> {
 
     public static void Send(string type, params object[] parameters)
     {
+        if(!isConnected) {
+            return;
+        }
         StringBuilder message = new StringBuilder();
         message.Append($"{PlayerIOMessage} Message Sent :");
         foreach(object parameter in parameters) {
