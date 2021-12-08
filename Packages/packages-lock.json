@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.etienne": {
+      "version": "https://github.com/Omadel/Etienne.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "4b26b3787f5599eeff722d069b0c0ecf63bb9296"
+    },
     "com.unity.collab-proxy": {
       "version": "1.5.7",
       "depth": 0,
